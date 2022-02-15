@@ -12,7 +12,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package eglot
-  :hook ((c-mode c++-mode go-mode java-mode js-mode python-mode rust-mode web-mode) . eglot-ensure)
+  :hook ((c-mode c++-mode go-mode java-mode js-mode python-mode rust-mode web-mode scala-mode) . eglot-ensure)
   :bind (("C-c e f" . #'eglot-format)
          ("C-c e i" . #'eglot-code-action-organize-imports)
          ("C-c e q" . #'eglot-code-action-quickfix))
@@ -102,6 +102,26 @@ eg.from datetime import datetime."
 (use-package restclient
   :mode (("\\.http\\'" . restclient-mode)))
 (use-package yaml-mode)
+
+;; scala support
+;; Enable scala-mode for highlighting, indentation and motion commands
+(use-package scala-mode
+  :interpreter
+  ("scala" . scala-mode))
+;; Enable sbt mode for executing sbt commands
+(use-package sbt-mode
+  :commands sbt-start sbt-command
+  :config
+  ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
+  ;; allows using SPACE when in the minibuffer
+  (substitute-key-definition
+   'minibuffer-complete-word
+   'self-insert-command
+   minibuffer-local-completion-map)
+   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
+   (setq sbt:program-options '("-Dsbt.supershell=false"))
+   )
+;; scala end
 
 (use-package quickrun)
 
