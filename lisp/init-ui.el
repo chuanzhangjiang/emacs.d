@@ -46,7 +46,7 @@
       (dolist (charset '(kana han cjk-misc bopomofo))
 	(set-fontset-font t charset cf))
       (setq face-font-rescale-alist
-	    (mapcar (lambda (item) (cons item 1.2)) cfl)))))
+	    (mapcar (lambda (item) (cons item 0.9)) cfl)))))
 
 ;; settings for daemon mode
 (if (daemonp)
