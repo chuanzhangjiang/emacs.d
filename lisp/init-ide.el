@@ -77,10 +77,10 @@ eg.from datetime import datetime."
 	    (define-key python-mode-map (kbd "C-c p r") 'python-remove-all-unused-imports)))
 
 ;; Rust
-(use-package rust-mode
-  :config
-  (setq rust-format-on-save t)
-  (define-key rust-mode-map (kbd "C-c C-c") 'rust-run))
+;; (use-package rust-mode
+;;   :config
+;;   (setq rust-format-on-save t)
+;;   (define-key rust-mode-map (kbd "C-c C-c") 'rust-run))
 
 ;; Web Developemnt (html, css, js)
 (use-package web-mode
@@ -104,6 +104,8 @@ eg.from datetime import datetime."
 (use-package yaml-mode)
 
 (use-package quickrun)
+
+
 
 (provide 'init-ide)
 ;; Local Variables:

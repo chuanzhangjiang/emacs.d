@@ -12,6 +12,14 @@
 
 ;;; Code:
 
+(use-package dracula-theme
+  :init (load-theme 'dracula t))
+(use-package smart-mode-line
+  :init
+  (setq sml/no-confirm-load-theme t
+	sml/theme 'respectful)
+  (sml/setup))
+
 (toggle-frame-maximized)
 
 ;; adjust the fonts
@@ -27,13 +35,13 @@
   "Font setup."
 
   (interactive)
-  (let* ((efl '("Cascadia Code" "Source Code Pro" "JetBrains Mono" "Courier New" "Monaco" "Ubuntu Mono"))
-	 (cfl '("楷体" "黑体" "STHeiti" "STKaiti"))
+  (let* ((efl '("FiraCode Nerd Font" "Cascadia Code" "Source Code Pro" "JetBrains Mono" "Courier New" "Monaco" "Ubuntu Mono"))
+	 (cfl '("Noto Sans CJK SC", "楷体" "黑体" "STHeiti" "STKaiti"))
 	 (cf (available-font cfl))
 	 (ef (available-font efl)))
     (when ef
       (dolist (face '(default fixed-pitch fixed-pitch-serif variable-pitch))
-	(set-face-attribute face nil :family ef)))
+	(set-face-attribute face nil :family ef :height 102 )))
     (when cf
       (dolist (charset '(kana han cjk-misc bopomofo))
 	(set-fontset-font t charset cf))

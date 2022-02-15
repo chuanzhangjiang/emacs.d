@@ -70,9 +70,9 @@
 
 ;; Line Number
 ;; this package introduced in Emacs 26, so only enabled when 26+
-(use-package display-line-numbers
-  :if (> emacs-major-version 26)
-  :hook (prog-mode . display-line-numbers-mode))
+;; (use-package display-line-numbers
+;;  :if (> emacs-major-version 26)
+;;  :hook (prog-mode . display-line-numbers-mode))
 
 ;; Org Mode
 (setq org-hide-leading-stars t
