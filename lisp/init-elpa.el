@@ -9,7 +9,7 @@
 ;;; Code:
 
 ;;; settings for package archives
-(setq package-archives '(("melpa" . "http://mirrors.bfsu.edu.cn/elpa/melpa/")
+(setq  package-archives '(("melpa" . "http://mirrors.bfsu.edu.cn/elpa/melpa/")
                          ("gnu" . "http://mirrors.bfsu.edu.cn/elpa/gnu/"))
       package-check-signature nil
       load-prefer-newer t)

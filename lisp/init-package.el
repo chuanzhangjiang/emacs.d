@@ -35,7 +35,8 @@
   :when (< emacs-major-version 28)
   :diminish " Proj."
   :init (add-hook 'after-init-hook 'projectile-mode)
-  :config (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  :config (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+          (define-key projectile-mode-map (kbd "C-x C-f") 'projectile-find-file))
 
 ;; Show the delimiters as rainbow color
 (use-package rainbow-delimiters

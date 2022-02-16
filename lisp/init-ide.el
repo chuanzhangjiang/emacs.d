@@ -11,103 +11,27 @@
 ;; settings for LSP MODE ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package eglot
-  :hook ((c-mode c++-mode go-mode java-mode js-mode python-mode rust-mode web-mode scala-mode) . eglot-ensure)
-  :bind (("C-c e f" . #'eglot-format)
-         ("C-c e i" . #'eglot-code-action-organize-imports)
-         ("C-c e q" . #'eglot-code-action-quickfix))
+(use-package lsp-mode
+  ;; Optional - enable lsp-mode automatically in scala files
+  :hook  (scala-mode . lsp)
+         (lsp-mode . lsp-lens-mode)
   :config
-  ;; (setq eglot-ignored-server-capabilities '(:documentHighlightProvider))
-  (defun eglot-actions-before-save()
-    (add-hook 'before-save-hook (lambda ()
-                                  (call-interactively #'eglot-format)
-                                  (call-interactively #'eglot-code-action-organize-imports))))
-  (add-to-list 'eglot-server-programs '(web-mode "vls"))
-  (add-hook 'eglot--managed-mode-hook #'eglot-actions-before-save))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; settings for Program Languages ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Golang
-(use-package go-mode
-  :config
-  (use-package go-fill-struct)
-  (use-package go-impl)
-  (use-package go-gen-test)
-  (use-package go-tag))
-
-;; Lisp
-;; You can choose paredit or lispy,but I use none of them,as they defined too many keybindings.
-;; (use-package paredit :init (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
-;; (use-package lispy :init (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1))))
-
-;; Python
-(defmacro check-run-execute (exec-file &rest body)
-  "Find the EXEC-FILE and run the BODY."
-
-  `(if (not (executable-find ,exec-file))
-       (message "[ERROR]: <%s> not found!" ,exec-file)
-     ,@body))
-
-;;;###autoload
-(defun python-isort ()
-  "Sort the imports with isort."
-  (interactive)
-  (check-run-execute "isort"
-		     (shell-command-on-region
-		      (point-min) (point-max)
-		      "isort --atomic --profile=black -"
-		      (current-buffer) t)))
-
-;;;###autoload
-(defun python-remove-all-unused-imports ()
-  "Remove all the unused imports, do NOT use pyimport, as it has bugs.
-eg.from datetime import datetime."
-  (interactive)
-  (check-run-execute "autoflake"
-		     (shell-command
-		      (format "autoflake -i --remove-all-unused-imports %s" (buffer-file-name)))
-		     (revert-buffer t t t)))
-
-(add-hook 'python-mode-hook
-	  (lambda ()
-	    (add-hook 'before-save-hook #'python-isort nil t)
-	    (define-key python-mode-map (kbd "C-c p s") 'python-isort)
-	    (define-key python-mode-map (kbd "C-c p r") 'python-remove-all-unused-imports)))
-
-;; Rust
-;; (use-package rust-mode
-;;   :config
-;;   (setq rust-format-on-save t)
-;;   (define-key rust-mode-map (kbd "C-c C-c") 'rust-run))
-
-;; Web Developemnt (html, css, js)
-(use-package web-mode
-  :init
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-  ;; use web-mode to handle vue file
-  (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
-  :config (setq web-mode-enable-current-element-highlight t))
-
-;; use C-j to expand emmet
-(use-package emmet-mode
-  :init
-  (add-hook 'web-mode-hook #'emmet-mode)
-  (add-hook 'css-mode-hook #'emmet-mode))
-
-(use-package json-mode)
-(use-package markdown-mode)
-(use-package protobuf-mode)
-(use-package restclient
-  :mode (("\\.http\\'" . restclient-mode)))
-(use-package yaml-mode)
+  ;; Uncomment following section if you would like to tune lsp-mode performance according to
+  ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+        (setq gc-cons-threshold 100000000) ;; 100mb
+        (setq read-process-output-max (* 1024 1024)) ;; 1mb
+        (setq lsp-idle-delay 0.500)
+        (setq lsp-log-io nil)
+        (setq lsp-completion-provider :capf)
+  ;; (setq lsp-prefer-flymake nil)
+  )
 
 ;; scala support
 ;; Enable scala-mode for highlighting, indentation and motion commands
 (use-package scala-mode
   :interpreter
-  ("scala" . scala-mode))
+    ("scala" . scala-mode))
+
 ;; Enable sbt mode for executing sbt commands
 (use-package sbt-mode
   :commands sbt-start sbt-command
@@ -120,12 +44,28 @@ eg.from datetime import datetime."
    minibuffer-local-completion-map)
    ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
    (setq sbt:program-options '("-Dsbt.supershell=false"))
-   )
-;; scala end
+)
 
-(use-package quickrun)
+;; Add metals backend for lsp-mode
+(use-package lsp-metals)
 
+;; Enable nice rendering of documentation on hover
+;;   Warning: on some systems this package can reduce your emacs responsiveness significally.
+;;   (See: https://emacs-lsp.github.io/lsp-mode/page/performance/)
+;;   In that case you have to not only disable this but also remove from the packages since
+;;   lsp-mode can activate it automatically.
+(use-package lsp-ui)
 
+;; Use the Debug Adapter Protocol for running tests and debugging
+(use-package posframe
+  ;; Posframe is a pop-up tool that must be manually installed for dap-mode
+  )
+(use-package dap-mode
+  :hook
+  (lsp-mode . dap-mode)
+  (lsp-mode . dap-ui-mode)
+  )
+;; scala support ends
 
 (provide 'init-ide)
 ;; Local Variables:
