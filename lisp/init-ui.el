@@ -12,8 +12,8 @@
 
 ;;; Code:
 
-(use-package dracula-theme
-  :init (load-theme 'dracula t))
+(use-package flucui-themes
+  :init (load-theme 'flucui-dark t))
 (use-package smart-mode-line
   :init
   (setq sml/no-confirm-load-theme t
