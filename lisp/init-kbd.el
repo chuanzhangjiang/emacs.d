@@ -61,6 +61,8 @@
 ;; Syntax
 (global-set-key (kbd "M-n") #'flymake-goto-next-error)
 (global-set-key (kbd "M-p") #'flymake-goto-prev-error)
+;; treemacs
+(global-set-key (kbd "C-c t") 'treemacs)
 
 (provide 'init-kbd)
 
