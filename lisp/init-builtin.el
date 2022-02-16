@@ -96,8 +96,9 @@
 ;; Save Place
 (save-place-mode 1)
 
-;; only use spaces instead of TAB, use C-q TAB to input the TAB char
+;; only use spaces instead of TAB, use C-q TAB to input the TAB char, changed tab to 4 spaces
 (setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 
 ;; Diminish Builtins
 (dolist (elem '(abbrev-mode eldoc-mode))
