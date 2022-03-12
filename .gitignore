@@ -3,7 +3,7 @@
 
 # Excludes - only control these files
 !.gitignore
-!README*.md
+!README*.org
 !init.el
 !early-init.el
 !lisp/

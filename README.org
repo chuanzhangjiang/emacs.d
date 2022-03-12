@@ -1,0 +1,2 @@
+* 关于项目
+ 此项目以b站up主[[https://github.com/cabins][第253夜图灵笔记]]的[[https://github.com/cabins/.emacs.d][酸枣]]项目为基础修改.
