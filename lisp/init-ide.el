@@ -14,6 +14,7 @@
 (use-package lsp-mode
   ;; Optional - enable lsp-mode automatically in scala files
   :hook
+    (before-save . lsp-format-buffer)
     (scala-mode . lsp)
     (lsp-mode . lsp-lens-mode)
   :config
@@ -31,10 +32,7 @@
 ;; Enable scala-mode for highlighting, indentation and motion commands
 (use-package scala-mode
   :interpreter
-    ("scala" . scala-mode)
-  :config
-  	(setq lsp-headerline-breadcrumb-enable nil)
-  	(define-key scala-mode-map (kbd "C-x C-f") 'projectile-find-file))
+    ("scala" . scala-mode))
 
 ;; Enable sbt mode for executing sbt commands
 (use-package sbt-mode
@@ -47,9 +45,7 @@
    'self-insert-command
    minibuffer-local-completion-map)
    ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
-   (setq sbt:program-options '("-Dsbt.supershell=false"))
-)
-
+   (setq sbt:program-options '("-Dsbt.supershell=false")))
 ;; Add metals backend for lsp-mode
 (use-package lsp-metals)
 

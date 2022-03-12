@@ -35,4 +35,10 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
+;; set cursor from box to bar
+(setq-default cursor-type 'bar)
+
+;; highlight current line
+(global-hl-line-mode t)
+
 ;;; early-init.el ends here

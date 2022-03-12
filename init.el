@@ -48,3 +48,4 @@
 ;; Local Variables:
 ;; byte-compile-warnings: (not obsolete free-vars unresolved)
 ;; End:
+(put 'downcase-region 'disabled nil)

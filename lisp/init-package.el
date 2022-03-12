@@ -37,6 +37,7 @@
   :init (add-hook 'after-init-hook 'projectile-mode)
   :config (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
+
 ;; Show the delimiters as rainbow color
 (use-package rainbow-delimiters
   :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
@@ -47,13 +48,30 @@
 (use-package which-key
   :defer nil
   :diminish
-  :init (which-key-mode))
+  :hook (after-init . which-key-mode))
 
 ;; Settings for yasnippet
 (use-package yasnippet
   :diminish
   :init (add-hook 'after-init-hook 'yas-global-mode))
 (use-package yasnippet-snippets)
+
+;; 翻译插件
+(use-package go-translate
+  :config
+  (setq gts-translate-list '(("en" "zh")))
+  (setq gts-default-translator
+        (gts-translator
+         :picker (gts-prompt-picker)
+         :engines (list (gts-google-engine) (gts-google-rpc-engine))
+         :render (gts-buffer-render))))
+
+(require 'init-consult)
+;; (require 'init-ivy)
+
+;; flycheck
+;; (use-package flycheck
+;;   :hook (prog-mode . flycheck-mode))
 
 (provide 'init-package)
 

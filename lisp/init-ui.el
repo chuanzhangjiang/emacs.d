@@ -12,8 +12,20 @@
 
 ;;; Code:
 
-(use-package flucui-themes
-  :init (load-theme 'flucui-dark t))
+;; setup themes
+
+;; disable all themes
+(dolist (theme custom-enabled-themes)
+  (disable-theme theme))
+;; use dracula-theme
+(use-package dracula-theme
+  :init
+  (setq dracula-enlarge-headings nil)
+  ;; Use less pink and bold on the mode-line and minibuffer (default nil)
+  ;; (setq dracula-alternate-mode-line-and-minibuffer t)
+  (load-theme 'dracula t))
+;; (use-package flucui-themes
+;;   :init (load-theme 'flucui-dark t))
 (use-package smart-mode-line
   :init
   (setq sml/no-confirm-load-theme t

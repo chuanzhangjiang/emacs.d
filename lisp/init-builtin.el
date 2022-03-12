@@ -56,23 +56,15 @@
   :init (add-hook 'hs-minor-mode-hook (lambda () (diminish 'hs-minor-mode)))
   :hook (prog-mode . hs-minor-mode))
 
-;; ibuffer
-(use-package ibuffer
-  :init (defalias 'list-buffers 'ibuffer))
-
-;; Ido ( instead of ivy & counsel & swiper)
-(setq-default ido-auto-merge-work-directories-length -1
-	      ido-enable-flex-matching t
-	      isearch-lazy-count t
-	      lazy-count-prefix-format "%s/%s: ")
-(setq completion-ignored-extensions '(".o" ".elc" "~" ".bin" ".bak" ".obj" ".map" ".a" ".ln" ".class"))
-(fido-mode t)
-
 ;; Line Number
 ;; this package introduced in Emacs 26, so only enabled when 26+
-;; (use-package display-line-numbers
-;;  :if (> emacs-major-version 26)
-;;  :hook (prog-mode . display-line-numbers-mode))
+(use-package display-line-numbers
+ :if (> emacs-major-version 26)
+ :hook (prog-mode . display-line-numbers-mode)
+ :config
+ (setq display-line-numbers-type 'relative)
+ (setq display-line-numbers-grow-only t))
+
 
 ;; Org Mode
 (setq org-hide-leading-stars t
@@ -104,6 +96,8 @@
 (dolist (elem '(abbrev-mode eldoc-mode))
   (diminish elem))
 (add-hook 'hs-minor-mode-hook (lambda () (diminish 'hs-minor-mode)))
+
+;; (require 'init-ido)
 
 (provide 'init-builtin)
 
