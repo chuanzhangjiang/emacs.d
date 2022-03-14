@@ -17,6 +17,18 @@
   :config
   (vertico-mode t))
 
+;; Configure directory extension.
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  ;; More convenient directory navigation commands
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  ;; Tidy shadowed file names
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
 ;; search don't care order, in minibuffer
 (use-package orderless
   :hook (vertico-mode . (lambda () (setq completion-styles '(orderless)))))
@@ -39,16 +51,6 @@
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
                  (window-parameters (mode-line-format . none)))))
-
-;; Consult users will also want the embark-consult package.
-(use-package embark-consult
-  :ensure t
-  :after (embark consult)
-  :demand t ; only necessary if you have the hook below
-  ;; if you want to have consult previews as you move around an
-  ;; auto-updating embark collect buffer
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; powerfull search util
 (use-package consult
@@ -130,19 +132,14 @@
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
   )
 
-(defun consult-directory-externally (file)
-  "Open FILE externally using the default application of the system."
-  (interactive "fOpen externally: ")
-  (if (and (eq system-type 'windows-nt)
-	   (fboundp 'w32-shell-execute))
-      (shell-command-to-string (encode-coding-string (replace-regexp-in-string "/" "\\\\"
-	    (format "explorer.exe %s" (file-name-directory (expand-file-name file)))) 'gbk))
-    (call-process (pcase system-type
-		    ('darwin "open")
-		    ('cygwin "cygstart")
-		    (_ "xdg-open"))
-		  nil 0 nil
-		  (file-name-directory (expand-file-name file)))))
+;; Consult users will also want the embark-consult package.
+(use-package embark-consult
+  :after (embark consult)
+  :demand t ; only necessary if you have the hook below
+  ;; if you want to have consult previews as you move around an
+  ;; auto-updating embark collect buffer
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 (provide 'init-consult)
 

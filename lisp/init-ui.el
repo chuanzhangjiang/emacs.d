@@ -15,8 +15,8 @@
 ;; setup themes
 
 ;; disable all themes
-(dolist (theme custom-enabled-themes)
-  (disable-theme theme))
+;; (dolist (theme custom-enabled-themes)
+;;   (disable-theme theme))
 ;; use dracula-theme
 (use-package dracula-theme
   :init

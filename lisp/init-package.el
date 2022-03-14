@@ -66,6 +66,13 @@
          :engines (list (gts-google-engine) (gts-google-rpc-engine))
          :render (gts-buffer-render))))
 
+(use-package crux)
+(use-package hungry-delete)
+(use-package drag-stuff)
+(use-package format-all
+  :diminish " Fmt."
+  :init (add-hook 'prog-mode-hook 'format-all-mode))
+
 (require 'init-consult)
 ;; (require 'init-ivy)
 

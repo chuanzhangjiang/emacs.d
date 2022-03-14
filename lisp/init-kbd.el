@@ -12,16 +12,6 @@
 
 ;;; Code:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                    Global Keybinds Dependencies
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package crux)
-(use-package hungry-delete)
-(use-package drag-stuff)
-(use-package format-all
-  :diminish " Fmt."
-  :init (add-hook 'prog-mode-hook 'format-all-mode))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;                   Global Key Bindings
 ;;
@@ -65,7 +55,9 @@
 (global-set-key (kbd "M-p") #'flymake-goto-prev-error)
 ;; treemacs
 (global-set-key (kbd "<f8>") 'treemacs)
-;; consult
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; consult 相关键位绑定
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "C-c h") 'consult-history)
 (global-set-key (kbd "C-c m") 'consult-mode-command)
 (global-set-key (kbd "C-c k") 'consult-kmacro)
@@ -106,10 +98,16 @@
 (global-set-key (kbd "M-s u") 'consult-focus-lines)
 ;; Isearch integration
 (global-set-key (kbd "M-s e") 'consult-isearch-history)
-;;embark
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;embark 相关键位绑定
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "C-.") 'embark-act)         ;; pick some comfortable binding
 (global-set-key (kbd "C-;") 'embark-dwim)        ;; good alternative: M-.
 (global-set-key (kbd "C-h B") 'embark-bindings)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 自定义函数键位绑定
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(global-set-key (kbd "C-c o") 'open-by-default-app)
 
 (provide 'init-kbd)
 

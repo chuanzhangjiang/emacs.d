@@ -17,13 +17,16 @@
 ;; Do not resize the frame at this early stage.
 (setq frame-inhibit-implied-resize t)
 
+;; 不加载x resources
+(setq inhibit-x-resources t)
+
 ;; System default coding
 (set-language-environment 'utf-8)
 
 ;; Load theme early to avoid the blinking
-(if (>= emacs-major-version 28)
-    (load-theme 'modus-operandi t)
-  (load-theme 'leuven t))
+;; (if (>= emacs-major-version 28)
+;;     (load-theme 'modus-operandi t)
+;;   (load-theme 'leuven t))
 
 ;; Cleaner GUI
 (unless (eq system-type 'darwin)
